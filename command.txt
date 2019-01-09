@@ -1,0 +1,59 @@
+
+1. Init Geth to use selected genesis file
+
+geth --datadir node1 init genesis.json
+
+
+2. Run Geth with parameter and enable console
+geth --networkid 555 --identity node1 --verbosity 3 --nodiscover --nat none --datadir node1 --rpc --rpcapi "web3, eth, personal, net" --rpccorsdomain "*" --ipcpath node1/geth.ipc console
+
+
+3. Geth will start at port 30303 and enable RPC at port 8545
+
+
+
+4. Create first account
+
+personal.newAccount()
+
+##mining
+
+
+
+5. Start mining (It will take a long time in first time to generate DAG)
+
+miner.start(1)
+
+
+
+6. Stop mining
+
+miner.stop()
+
+##Start node2
+
+
+
+
+7. Enable another node by init again and change directory to node2
+
+geth --datadir node2 init genesis.json
+
+
+
+8. Run Geth as node 2 by change identity, chain directory and change port to new one
+
+geth --networkid 100 --identity node2 --verbosity 3 --nodiscover --nat none --datadir node2 --rpc --rpcapi "web3, eth, personal, net" --rpccorsdomain "*" --rpcport 8546  --port 30304 --ipcpath node2/geth.ipc console
+
+
+
+9. Geth will start at port 30304 and enable RPC at port 8546
+
+##Connect node2 to node1
+10. get node1's "enode" 
+admin.nodeInfo.enode 
+
+11. add node1 in node2 
+admin.addPeer("<enode from node 1>")  
+
+enode://5b0e7006cf4295c776bc4e77e8858f6c0a88e18e40f2a869a3a4baedae11569444bbe5c1d6bda44e46218752a0a081f60ca0ded909e98c6a3ad83c7532e4cb16@
